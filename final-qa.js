@@ -65,3 +65,30 @@
     }
   });
 })();
+
+(()=>{
+  const section=document.querySelector('.section4-ref');
+  if(!section)return;
+  section.setAttribute('role','region');
+  section.setAttribute('aria-label','Founder testimonials');
+  const stack=section.querySelector('.s4-card-stack');
+  if(stack){stack.setAttribute('aria-live','polite');stack.setAttribute('aria-atomic','false')}
+
+  const syncAvatars=()=>{
+    section.querySelectorAll('.s4-card').forEach(card=>{
+      const avatar=card.querySelector('.s4-avatar');
+      const name=card.querySelector('.s4-author-text strong');
+      if(!avatar||!name)return;
+      const initials=name.textContent.trim().split(/\s+/).slice(0,2).map(part=>part[0]||'').join('');
+      avatar.textContent=initials;
+      avatar.setAttribute('aria-hidden','true');
+    });
+  };
+  syncAvatars();
+  if(stack){new MutationObserver(syncAvatars).observe(stack,{childList:true,subtree:true,characterData:true})}
+
+  section.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft'){e.preventDefault();section.querySelector('.s4-prev')?.click()}
+    else if(e.key==='ArrowRight'){e.preventDefault();section.querySelector('.s4-next')?.click()}
+  });
+})();
