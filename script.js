@@ -1,12 +1,3 @@
-const toggle = document.querySelector('.menu-toggle');
-const menu = document.querySelector('.site-menu');
-if(toggle && menu){
-  toggle.addEventListener('click', () => {
-    const open = menu.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    menu.classList.remove('open');
-    toggle.setAttribute('aria-expanded','false');
-  }));
-}
+const toggle=document.querySelector('.menu-toggle');const menu=document.querySelector('.site-menu');if(toggle&&menu){toggle.addEventListener('click',()=>{const open=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',open?'true':'false')});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');toggle.setAttribute('aria-expanded','false')}))}
+const items=document.querySelectorAll('.reveal,.reveal-scale');const io=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target)}})},{threshold:.14,rootMargin:'0px 0px -8% 0px'});items.forEach(el=>io.observe(el));
+const parallaxImages=document.querySelectorAll('.hero-image-wrap img,.founder-photo img');let ticking=false;function updateParallax(){parallaxImages.forEach(img=>{const box=img.parentElement.getBoundingClientRect();if(box.bottom>0&&box.top<innerHeight){const progress=(innerHeight-box.top)/(innerHeight+box.height);const y=-10+progress*18;img.style.transform=`translateY(${y}%)`}});ticking=false}addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(updateParallax);ticking=true}},{passive:true});updateParallax();
