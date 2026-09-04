@@ -87,8 +87,34 @@
   syncAvatars();
   if(stack){new MutationObserver(syncAvatars).observe(stack,{childList:true,subtree:true,characterData:true})}
 
+  section.querySelectorAll('.s4-arrow').forEach(button=>button.setAttribute('type','button'));
   section.addEventListener('keydown',e=>{
     if(e.key==='ArrowLeft'){e.preventDefault();section.querySelector('.s4-prev')?.click()}
     else if(e.key==='ArrowRight'){e.preventDefault();section.querySelector('.s4-next')?.click()}
   });
+})();
+
+(()=>{
+  const main=document.querySelector('main');
+  if(main&&!main.id)main.id='main-content';
+  if(main&&!document.querySelector('.arven-skip-link')){
+    const skip=document.createElement('a');
+    skip.className='arven-skip-link';
+    skip.href='#main-content';
+    skip.textContent='Skip to main content';
+    document.body.insertBefore(skip,document.body.firstChild);
+  }
+
+  document.querySelectorAll('.rf-service-card').forEach(card=>{
+    const icon=card.querySelector('b');
+    if(icon)icon.setAttribute('aria-hidden','true');
+    if(card.querySelector('.rf-service-link'))return;
+    const link=document.createElement('a');
+    link.className='rf-service-link';
+    link.href='#contact';
+    link.textContent='DISCUSS THIS SERVICE ↗';
+    card.appendChild(link);
+  });
+
+  document.querySelectorAll('.rf-process-row b').forEach(icon=>icon.setAttribute('aria-hidden','true'));
 })();
